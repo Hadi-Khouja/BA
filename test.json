@@ -1,0 +1,12 @@
+{
+    "users": {
+        "create": "allow",
+        "modify": "allow",
+        "delete": "undefined"
+    },
+    "groups": {
+        "create": "deny",
+        "modify": "undefined",
+        "delete": "undefined"
+    }
+}
