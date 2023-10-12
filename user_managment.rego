@@ -29,3 +29,7 @@ check_rights_on_group(action) = "denied" {
 	input.user.roles[_] == "admin"
 	action == "create"
 }
+
+allow {
+	1 == 1
+}
