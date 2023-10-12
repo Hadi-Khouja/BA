@@ -1,0 +1,11 @@
+POST http://localhost:8181/v1/data/user_managment/users HTTP/1.1
+Content-Type: application/json
+ 
+{
+    "input": {
+        "user": {
+            "username": "ad",
+            "roles": ["developer", "admin"]
+        }
+    }
+}
