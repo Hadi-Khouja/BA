@@ -1,0 +1,25 @@
+.justify-content-center {
+  display: flex;
+  justify-content: center;
+}
+
+.page-container {
+  height: calc(100% - 64px);
+}
+
+.toolbar-container {
+  display: flex;
+  align-items: center;
+}
+
+.width-1024px {
+  width: 1024px;
+}
+
+.width-2048px {
+  width: 2048px;
+}
+
+mat-sidenav {
+  width: 200px;
+}
