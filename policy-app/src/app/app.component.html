@@ -24,11 +24,16 @@
           [mat-menu-trigger-for]="userSelectMenu"
           [color]="'accent'"
           *ngIf="userService.getActiveUser | async as selectedUser">
+          <mat-icon>arrow_drop_down</mat-icon>
           {{ selectedUser }}
         </button>
         <mat-menu #userSelectMenu>
-          <button mat-menu-item (click)="userService.setActiveUser('Admin')">admin</button>
-          <button mat-menu-item (click)="userService.setActiveUser('User')">user</button>
+          <button
+            mat-menu-item
+            *ngFor="let user of userService.getUserTypes()"
+            (click)="userService.setActiveUser(user)">
+            {{ user }}
+          </button>
         </mat-menu>
       </div>
     </mat-toolbar>

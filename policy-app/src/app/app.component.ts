@@ -11,7 +11,7 @@ import { UserService } from './services/user.service';
 export class AppComponent {
   constructor(
     private router: Router,
-    public userService: UserService,
+    public userService: UserService
   ) {}
 
   public onSelectionChange(list: MatSelectionList): void {
