@@ -1,0 +1,7 @@
+**/node_modules/
+**/dist
+**/.vscode
+**/.angular
+.gitignore
+.prettierignore
+.prettierrc.json

@@ -1,6 +1,8 @@
 .vscode
 node_modules
+.angular
 /dist
 /bundles
 /wireframe
+/requests
 opa.exe

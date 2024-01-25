@@ -2,7 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { UserService } from 'src/app/services/user.service';
-import { OpaFetchService } from 'src/app/services/opa-fetch.service';
 
 type Right = { action: 'create' | 'edit' | 'delete'; allow: boolean | 'undefined' };
 
@@ -29,7 +28,6 @@ export class UsersManagmentComponent implements OnInit {
   constructor(
     private userService: UserService,
     private http: HttpClient,
-    private opa: OpaFetchService,
   ) {}
 
   ngOnInit(): void {
