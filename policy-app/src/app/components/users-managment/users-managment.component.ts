@@ -41,13 +41,13 @@ export class UsersManagmentComponent implements OnInit {
         },
       },
     };
-
-    this.http.get<string>("https://localhost:7276/OPA").subscribe({
+  
+    this.http.get<any>("http://localhost:8000/opa/v1/data/user_managment/users").subscribe({
       next: (data) => {
         console.log(data);
       }, 
       error: () => {
-        console.log("enmak");
+        console.log("fehler");
       }
     });
   }

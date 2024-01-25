@@ -1,0 +1,10 @@
+{
+    "/opa": {
+      "target": "http://localhost:8181",
+      "secure": false,
+      "pathRewrite": {
+        "^/opa": ""
+      }
+    },
+    "logLevel": "debug"
+  }
