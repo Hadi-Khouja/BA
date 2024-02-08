@@ -22,10 +22,9 @@
         <button
           mat-raised-button
           [mat-menu-trigger-for]="userSelectMenu"
-          [color]="'accent'"
-          *ngIf="userService.getActiveUser | async as selectedUser">
+          [color]="'accent'">
           <mat-icon>arrow_drop_down</mat-icon>
-          {{ selectedUser }}
+          {{ userService.activeUser() }}
         </button>
         <mat-menu #userSelectMenu>
           <button
