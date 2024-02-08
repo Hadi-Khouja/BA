@@ -37,6 +37,7 @@ export class UsersManagmentComponent {
     effect(() => this.fetchData())
   }
 
+
   fetchData() {
     let body = {
       input: {
