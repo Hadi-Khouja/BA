@@ -39,12 +39,12 @@ services:
     depends_on:
       - opal_server
     command: sh -c "exec ./wait-for.sh opal_server:7002 --timeout=20 -- ./start.sh"
-
-  policy_app:
-    image: angular
-    build: 
-      context: .
-      dockerfile: Dockerfile
-    ports:
-      - "8000:80"
-      - "8001:85"
+#
+#  policy_app:
+#    image: angular
+#    build: 
+#      context: .
+#      dockerfile: Dockerfile
+#    ports:
+#      - "8000:80"
+#      - "8001:85"

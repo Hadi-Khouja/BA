@@ -1,4 +1,4 @@
-FROM node:16-alpine as node
+FROM node:latest as node
 WORKDIR /app
 COPY ./policy-app .
 RUN yarn install
