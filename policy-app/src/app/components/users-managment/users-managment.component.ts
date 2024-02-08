@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, effect } from '@angular/core';
+import { Component, signal, effect } from '@angular/core';
 import { Observable, map, tap } from 'rxjs';
 import { UserService } from 'src/app/services/user.service';
 import { OpaFetchService } from 'src/app/services/opa-fetch.service';
@@ -21,7 +21,7 @@ export class UsersManagmentComponent {
   public PolicyData!: Observable<Policy>;
   user = this.userService.activeUser;
 
-  allowedUserRights: Right[] = [];
+  allowedUserRights = signal<Right[]>([]);
 
   allowedGroupRights: Right[] = [
     { action: 'create', allow: 'denied' },
@@ -34,9 +34,8 @@ export class UsersManagmentComponent {
     private http: HttpClient,
     private opa: OpaFetchService,
   ) {
-    effect(() => this.fetchData())
+    effect(() => this.fetchData());
   }
-
 
   fetchData() {
     let body = {
@@ -48,20 +47,23 @@ export class UsersManagmentComponent {
       },
     };
 
-    this.PolicyData = this.http
-      .post<any>(window.location.origin + '/opa/v1/data/user_managment/users', body)
-      .pipe(map((value) => value.result),
-      tap((value: Policy) => {
-        if(this.allowedUserRights.length === 0) {
-          this.allowedUserRights.push({ action: 'create', allow: value.create});
-          this.allowedUserRights.push({ action: 'edit', allow: value.edit});
-          this.allowedUserRights.push({ action: 'delete', allow: value.delete});
-        } else {
-          this.allowedUserRights[0] = { action: 'create', allow: value.create};
-          this.allowedUserRights[1] = { action: 'edit', allow: value.edit};
-          this.allowedUserRights[2] = { action: 'delete', allow: value.delete};
-        }
-      }));
+    this.PolicyData = this.http.post<any>(window.location.origin + '/opa/v1/data/user_managment/users', body).pipe(
+      tap((value: any) => {
+        this.allowedUserRights.update((rights) => {
+          if (rights.length === 0) {
+            rights.push({ action: 'create', allow: value.result.create });
+            rights.push({ action: 'edit', allow: value.result.edit });
+            rights.push({ action: 'delete', allow: value.result.delete });
+          } else {
+            rights[0] = { action: 'create', allow: value.result.create };
+            rights[1] = { action: 'edit', allow: value.result.edit };
+            rights[2] = { action: 'delete', allow: value.result.delete };
+          }
+
+          return rights;
+        });
+      }),
+    );
   }
 }
 

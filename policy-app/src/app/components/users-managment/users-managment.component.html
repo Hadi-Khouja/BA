@@ -5,7 +5,7 @@
         <span>allowed users rights</span>
         <mat-chip-set>
           <mat-chip
-            *ngFor="let right of allowedUserRights"
+            *ngFor="let right of allowedUserRights()"
             [highlighted]="true"
             [disabled]="right.allow === 'undefined'"
             [color]="right.allow !== 'undefined' ? (right.allow === 'allow' ? 'primary' : 'warn') : 'default'">
