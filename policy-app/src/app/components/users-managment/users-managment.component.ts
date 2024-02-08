@@ -1,10 +1,16 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, map, tap } from 'rxjs';
 import { UserService } from 'src/app/services/user.service';
 import { OpaFetchService } from 'src/app/services/opa-fetch.service';
 
-type Right = { action: 'create' | 'edit' | 'delete'; allow: boolean | 'undefined' };
+type Right = { action: 'create' | 'edit' | 'delete'; allow: 'allow' | 'denied' | 'undefined' };
+
+interface Policy {
+  create: Right['allow'];
+  edit: Right['allow'];
+  delete: Right['allow'];
+}
 
 @Component({
   selector: 'app-users-managment',
@@ -12,16 +18,16 @@ type Right = { action: 'create' | 'edit' | 'delete'; allow: boolean | 'undefined
   styleUrls: ['./users-managment.component.scss'],
 })
 export class UsersManagmentComponent implements OnInit {
-  public PolicyData!: Observable<any>;
+  public PolicyData!: Observable<Policy>;
 
   allowedUserRights: Right[] = [
-    { action: 'create', allow: true },
-    { action: 'edit', allow: true },
+    { action: 'create', allow: 'allow' },
+    { action: 'edit', allow: 'allow' },
     { action: 'delete', allow: 'undefined' },
   ];
 
   allowedGroupRights: Right[] = [
-    { action: 'create', allow: false },
+    { action: 'create', allow: 'denied' },
     { action: 'edit', allow: 'undefined' },
     { action: 'delete', allow: 'undefined' },
   ];
@@ -41,15 +47,15 @@ export class UsersManagmentComponent implements OnInit {
         },
       },
     };
-  
-    this.http.get<any>("http://localhost:8000/opa/v1/data/user_managment/users").subscribe({
-      next: (data) => {
-        console.log(data);
-      }, 
-      error: () => {
-        console.log("fehler");
-      }
-    });
+
+    this.PolicyData = this.http
+      .post<any>(window.location.origin + '/opa/v1/data/user_managment/users', body)
+      .pipe(map((value) => value.result),
+      tap((value: Policy) => {
+        this.allowedUserRights[0].allow = value.create;
+        this.allowedUserRights[1].allow = value.edit;
+        this.allowedUserRights[2].allow = value.delete;
+      }));
   }
 }
 

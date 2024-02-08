@@ -8,7 +8,7 @@
             *ngFor="let right of allowedUserRights"
             [highlighted]="true"
             [disabled]="right.allow === 'undefined'"
-            [color]="right.allow !== 'undefined' ? (right.allow ? 'primary' : 'warn') : 'default'">
+            [color]="right.allow !== 'undefined' ? (right.allow === 'allow' ? 'primary' : 'warn') : 'default'">
             {{ right.action }}
           </mat-chip>
         </mat-chip-set>
@@ -30,7 +30,7 @@
             *ngFor="let right of allowedGroupRights"
             [highlighted]="true"
             [disabled]="right.allow === 'undefined'"
-            [color]="right.allow !== 'undefined' ? (right.allow ? 'primary' : 'warn') : 'default'">
+            [color]="right.allow !== 'undefined' ? (right.allow === 'allow' ? 'primary' : 'warn') : 'default'">
             {{ right.action }}
           </mat-chip>
         </mat-chip-set>
