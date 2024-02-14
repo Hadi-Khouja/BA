@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, signal, effect } from '@angular/core';
+import { Component, signal, effect, computed, Signal } from '@angular/core';
 import { Observable, map, tap } from 'rxjs';
 import { UserService } from 'src/app/services/user.service';
 import { OpaFetchService } from 'src/app/services/opa-fetch.service';
@@ -22,6 +22,16 @@ export class UsersManagmentComponent {
   user = this.userService.activeUser;
 
   allowedUserRights = signal<Right[]>([]);
+
+  selectedValues: Signal<Right['action'][]> = computed(() => {
+    var array: Right['action'][] = [];
+
+    this.allowedUserRights().forEach((right) => {
+      if (right.allow === 'allow') array.push(right.action);
+    });
+
+    return array;
+  });
 
   allowedGroupRights: Right[] = [
     { action: 'create', allow: 'denied' },

@@ -16,6 +16,12 @@
 
       <div class="main" *ngIf="PolicyData | async as policy">
         <pre>{{ policy | json }}</pre>
+        <mat-form-field>
+          <mat-label>Rights</mat-label>
+          <mat-select multiple [value]="selectedValues()">
+            <mat-option *ngFor="let right of allowedUserRights()" [value]="right.action">{{ right.action }}</mat-option>
+          </mat-select>
+        </mat-form-field>
       </div>
 
       <div class="footer"></div>
