@@ -1,0 +1,1 @@
+export type access = 'allow' | 'denied' | 'undefined';

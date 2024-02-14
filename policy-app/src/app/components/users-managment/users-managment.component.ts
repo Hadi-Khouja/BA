@@ -1,16 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, signal, effect, computed, Signal } from '@angular/core';
-import { Observable, map, tap } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { UserService } from 'src/app/services/user.service';
 import { OpaFetchService } from 'src/app/services/opa-fetch.service';
-
-type Right = { action: 'create' | 'edit' | 'delete'; allow: 'allow' | 'denied' | 'undefined' };
-
-interface Policy {
-  create: Right['allow'];
-  edit: Right['allow'];
-  delete: Right['allow'];
-}
+import { Policy } from 'src/types/Policy';
+import { Right } from 'src/types/Right';
 
 @Component({
   selector: 'app-users-managment',
