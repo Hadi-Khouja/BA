@@ -3,7 +3,7 @@ import { Component, signal, effect, computed, Signal } from '@angular/core';
 import { Observable, tap } from 'rxjs';
 import { UserService } from 'src/app/services/user.service';
 import { OpaFetchService } from 'src/app/services/opa-fetch.service';
-import { Policy } from 'src/types/Policy';
+import { Policy } from 'src/types/policy';
 import { Right } from 'src/types/Right';
 
 @Component({

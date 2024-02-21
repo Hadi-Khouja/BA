@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { loadPolicy } from '@open-policy-agent/opa-wasm';
-import { exhaustMap, map } from 'rxjs';
+import { Observable, tap } from 'rxjs';
+import { Right } from 'src/types/Right';
+import { RequestBody } from 'src/types/request-body';
 
 @Injectable({
   providedIn: 'root',
@@ -9,8 +10,18 @@ import { exhaustMap, map } from 'rxjs';
 export class OpaFetchService {
   constructor(private http: HttpClient) {}
 
-  public async readPolicy(body: any) {
-    this.http.get(window.location.origin + '/v1/data/user_managment/users');
+  public readPolicy(body: RequestBody): Observable<Right[]> {
+    return this.http.post<any>(window.location.origin + '/opa/v1/data/user_managment/users', body).pipe(
+      tap((value: any) => {
+        let rights: Right[] = [];
+
+        rights.push({ action: 'create', allow: value.result.create });
+        rights.push({ action: 'edit', allow: value.result.edit });
+        rights.push({ action: 'delete', allow: value.result.delete });
+        
+        return rights;
+      }),
+    );
   }
 }
 
