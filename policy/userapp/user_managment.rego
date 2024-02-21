@@ -25,7 +25,7 @@ check_rights_on_users(action) = "allow" {
 
 check_rights_on_users(action) = "allow" {
 	input.user.roles[_] == "reader"
-	action == "create"
+	not action == "edit"
 }
 
 check_rights_on_users(action) = "denied" {
