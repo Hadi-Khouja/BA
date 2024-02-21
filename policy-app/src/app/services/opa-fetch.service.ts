@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, tap } from 'rxjs';
-import { Right } from 'src/types/Right';
+import { Right } from 'src/types/right';
 import { RequestBody } from 'src/types/request-body';
 
 @Injectable({
