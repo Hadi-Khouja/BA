@@ -23,6 +23,11 @@ check_rights_on_users(action) = "allow" {
 	input.user.roles[_] == "editor"
 }
 
+check_rights_on_users(action) = "allow" {
+	input.user.roles[_] == "reader"
+	action == "create"
+}
+
 check_rights_on_users(action) = "denied" {
 	input.user.roles[_] == "admin"
 	action == "delete"
