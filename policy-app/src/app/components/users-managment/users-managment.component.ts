@@ -7,6 +7,7 @@ import { Policy } from 'src/types/policy';
 import { Right } from 'src/types/right';
 import { action } from 'src/types/action';
 import { MatSelectionList } from '@angular/material/list';
+import { SidenavService } from 'src/app/services/sidenav.service';
 
 @Component({
   selector: 'app-users-managment',
@@ -39,6 +40,7 @@ export class UsersManagmentComponent {
     private userService: UserService,
     private http: HttpClient,
     private opa: OpaFetchService,
+    private sidenav: SidenavService
   ) {
     effect(() => this.fetchData());
   }
@@ -110,5 +112,6 @@ export class UsersManagmentComponent {
   public onSelectionChange(list: MatSelectionList): void {
     const route = list.selectedOptions.selected[0].value;
     console.log(route);
+    this.sidenav.open();
   }
 }
