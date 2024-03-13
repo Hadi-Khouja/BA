@@ -1,75 +1,56 @@
 <mat-tab-group dynamicHeight>
   <mat-tab [label]="'Users'" style="flex-grow: 1">
-    <div class="scroll-content">
-      <div class="top display-flex align-items-center gap-8px">
-        <span>allowed users rights</span>
-        <mat-chip-set>
-          <mat-chip
-            *ngFor="let right of allowedUserRights()"
-            [highlighted]="true"
-            [disabled]="right.allow === 'undefined'"
-            [color]="right.allow !== 'undefined' ? (right.allow === 'allow' ? 'primary' : 'warn') : 'default'">
-            {{ right.action }}
-          </mat-chip>
-        </mat-chip-set>
-      </div>
-
-      <div class="main" *ngIf="PolicyData | async as policy">
+    <div class="scroll-content" *ngIf="PolicyData | async as policy">
         <mat-accordion>
           <mat-expansion-panel hideToggle>
             <mat-expansion-panel-header>
               <mat-panel-title>Test User 1</mat-panel-title>
             </mat-expansion-panel-header>
             <mat-selection-list
-              #ChoosePageList
+              #ChooseDocumentList
               [multiple]="false"
               [hideSingleSelectionIndicator]="true"
-              (selectionChange)="onSelectionChange(ChoosePageList)">
-              <mat-list-option [value]="'Document1'">test.pdf</mat-list-option>
-              <mat-list-option [value]="'DocumentClass1'">Document Class 1</mat-list-option>
-              <mat-list-option [value]="'text.txt'">text.txt</mat-list-option>
-            </mat-selection-list>
-          </mat-expansion-panel>
-
-          <mat-expansion-panel hideToggle>
-            <mat-expansion-panel-header>
-              <mat-panel-title> Test User 2 </mat-panel-title>
-            </mat-expansion-panel-header>
-            <mat-selection-list
-              #ChoosePageList
-              [multiple]="false"
-              [hideSingleSelectionIndicator]="true"
-              (selectionChange)="onSelectionChange(ChoosePageList)">
-              <mat-list-option [value]="'Document1'">test.pdf</mat-list-option>
-              <mat-list-option [value]="'text.txt'">text.txt</mat-list-option>
+              (selectionChange)="onSelectionChange(ChooseDocumentList)">
+              <mat-list-option [value]="'Document1'">
+                <mat-icon matListItemIcon>article</mat-icon>
+                test.pdf
+              </mat-list-option>
+              <mat-list-option [value]="'DocumentClass1'">
+                <mat-icon matListItemIcon>article</mat-icon>
+                Document Class 1
+              </mat-list-option>
+              <mat-list-option [value]="'text.txt'">
+                <mat-icon matListItemIcon>article</mat-icon>
+                text.txt
+              </mat-list-option>
             </mat-selection-list>
           </mat-expansion-panel>
         </mat-accordion>
-        <br />
-        <button mat-raised-button [color]="'primary'" (click)="updatePolicy()">update</button>
-      </div>
-
-      <div class="footer"></div>
     </div>
   </mat-tab>
   <mat-tab [label]="'Groups'">
     <div class="scroll-content">
-      <div class="top display-flex align-items-center gap-8px">
-        <p>allowed groups rights</p>
-        <mat-chip-set>
-          <mat-chip
-            *ngFor="let right of allowedGroupRights"
-            [highlighted]="true"
-            [disabled]="right.allow === 'undefined'"
-            [color]="right.allow !== 'undefined' ? (right.allow === 'allow' ? 'primary' : 'warn') : 'default'">
-            {{ right.action }}
-          </mat-chip>
-        </mat-chip-set>
-      </div>
-
-      <div class="main"></div>
-
-      <div class="footer"></div>
+      <mat-accordion>
+        <mat-expansion-panel hideToggle>
+          <mat-expansion-panel-header>
+            <mat-panel-title>Test Group 1</mat-panel-title>
+          </mat-expansion-panel-header>
+          <mat-selection-list
+            #ChooseDocumentList
+            [multiple]="false"
+            [hideSingleSelectionIndicator]="true"
+            (selectionChange)="onSelectionChange(ChooseDocumentList)">
+            <mat-list-option [value]="'DocumentClass1'">
+              <mat-icon matListItemIcon>article</mat-icon>
+              Document Class 1
+            </mat-list-option>
+            <mat-list-option [value]="'text.txt'">
+              <mat-icon matListItemIcon>article</mat-icon>
+              text.txt
+            </mat-list-option>
+          </mat-selection-list>
+        </mat-expansion-panel>
+      </mat-accordion>
     </div>
   </mat-tab>
 </mat-tab-group>
