@@ -1,41 +1,23 @@
-<mat-sidenav-container fullscreen class="sidenav-container">
-  <mat-sidenav #drawer [mode]="'side'" [position]="'start'">
-    <mat-selection-list
-      #ChoosePageList
-      [multiple]="false"
-      [hideSingleSelectionIndicator]="true"
-      (selectionChange)="onSelectionChange(ChoosePageList)">
-      <mat-list-option [value]="'TASKS'" [selected]="isSelected('TASKS')">Tasks</mat-list-option>
-      <mat-list-option [value]="'USERS'" [selected]="isSelected('USERS')">User Managment</mat-list-option>
-      <mat-list-option [value]="'DOCS'" [selected]="isSelected('DOCS')">Documents</mat-list-option>
-      <mat-list-option [value]="'SIGN'" [selected]="isSelected('SIGN')">Sign</mat-list-option>
-    </mat-selection-list>
+<mat-toolbar [color]="'primary'" class="justify-content-center">
+  <div class="width-2048px toolbar-container gap-8px">
+    <span>Policy Test App</span>
+    <span class="flex-grow-1"></span>
+    <button mat-raised-button [mat-menu-trigger-for]="userSelectMenu" [color]="'accent'">
+      <mat-icon>arrow_drop_down</mat-icon>
+      {{ userService.activeUser() }}
+    </button>
+    <mat-menu #userSelectMenu>
+      <button mat-menu-item *ngFor="let user of userService.getUserTypes()" (click)="userService.setActiveUser(user)">
+        {{ user }}
+      </button>
+    </mat-menu>
+  </div>
+</mat-toolbar>
+<mat-sidenav-container class="page-container">
+  <mat-sidenav #drawer [mode]="'side'" [position]="'end'" opened>
+    <policy-selection></policy-selection>
   </mat-sidenav>
   <mat-sidenav-content>
-    <mat-toolbar [color]="'primary'" class="justify-content-center">
-      <div class="width-2048px toolbar-container gap-8px">
-        <button mat-icon-button (click)="drawer.toggle()">
-          <mat-icon>menu</mat-icon>
-        </button>
-        <span>Policy Test App</span>
-        <span class="flex-grow-1"></span>
-        <button
-          mat-raised-button
-          [mat-menu-trigger-for]="userSelectMenu"
-          [color]="'accent'">
-          <mat-icon>arrow_drop_down</mat-icon>
-          {{ userService.activeUser() }}
-        </button>
-        <mat-menu #userSelectMenu>
-          <button
-            mat-menu-item
-            *ngFor="let user of userService.getUserTypes()"
-            (click)="userService.setActiveUser(user)">
-            {{ user }}
-          </button>
-        </mat-menu>
-      </div>
-    </mat-toolbar>
     <div class="justify-content-center page-container">
       <div class="width-1024px">
         <router-outlet></router-outlet>
