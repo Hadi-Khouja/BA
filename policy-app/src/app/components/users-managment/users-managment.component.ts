@@ -5,6 +5,8 @@ import { UserService } from 'src/app/services/user.service';
 import { OpaFetchService } from 'src/app/services/opa-fetch.service';
 import { Policy } from 'src/types/policy';
 import { Right } from 'src/types/right';
+import { action } from 'src/types/action';
+import { MatSelectionList } from '@angular/material/list';
 
 @Component({
   selector: 'app-users-managment',
@@ -17,8 +19,8 @@ export class UsersManagmentComponent {
 
   allowedUserRights = signal<Right[]>([]);
 
-  selectedValues: Signal<Right['action'][]> = computed(() => {
-    var array: Right['action'][] = [];
+  selectedValues: Signal<action[]> = computed(() => {
+    var array: action[] = [];
 
     this.allowedUserRights().forEach((right) => {
       if (right.allow === 'allow') array.push(right.action);
@@ -69,5 +71,44 @@ export class UsersManagmentComponent {
       }),
     );
   }
-}
 
+  public updatePolicy() {
+    let body = `
+      package user_managment
+
+      actions = [
+        "create",
+        "edit",
+        "delete",
+      ]
+
+      users := {x: check_rights_on_users(x) | x = actions[_]}
+
+      check_rights_on_users(action) = "allow" {
+        input.user.roles[_] == "admin"
+        not action == "delete"
+      }
+
+      check_rights_on_users(action) = "denied" {
+        input.user.roles[_] == "admin"
+        action == "delete"
+      }
+
+      check_rights_on_users(action) = "allow" {
+        input.user.roles[_] == "editor"
+      }
+
+      check_rights_on_users(action) = "allow" {
+        input.user.roles[_] == "reader"
+      }
+      `;
+
+    this.http.put<any>(window.location.origin + '/opa/v1/policies/user_managment', body).subscribe();
+  }
+
+
+  public onSelectionChange(list: MatSelectionList): void {
+    const route = list.selectedOptions.selected[0].value;
+    console.log(route);
+  }
+}

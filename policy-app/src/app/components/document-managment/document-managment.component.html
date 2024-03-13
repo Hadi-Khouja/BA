@@ -1,10 +1,49 @@
 <div class="scroll-content">
   <div class="top">
-    <h1>Document</h1>
-    <p>document-managment works!</p>
+    <h1>Document Management System</h1>
   </div>
 
-  <div class="main"></div>
+  <div class="main" style="display: flex; flex-direction: row; gap: 16px;">
+    <div>
+      <mat-selection-list [multiple]="false">
+        <mat-list-option [value]="'Managers'">Managers</mat-list-option>
+        <mat-list-option [value]="'Employees'">Employees</mat-list-option>
+        <mat-list-option [value]="'Seceretery'">Seceretery</mat-list-option>
+      </mat-selection-list>
+    </div>
+    <div>
+      <p style="text-align: center;">read</p>
+      <mat-selection-list>
+          <mat-list-option></mat-list-option>
+          <mat-list-option></mat-list-option>
+          <mat-list-option></mat-list-option>
+      </mat-selection-list>
+    </div>
+    <div>
+      <p style="text-align: center;">write</p>
+      <mat-selection-list>
+          <mat-list-option></mat-list-option>
+          <mat-list-option></mat-list-option>
+          <mat-list-option></mat-list-option>
+      </mat-selection-list>
+    </div>
+    <div>
+      <p style="text-align: center;">edit</p>
+      <mat-selection-list>
+          <mat-list-option></mat-list-option>
+          <mat-list-option></mat-list-option>
+          <mat-list-option></mat-list-option>
+      </mat-selection-list>
+    </div>
+    <div>
+      <br>
+      <mat-list>
+          <mat-list-item>Confedential</mat-list-item>
+          <mat-list-item>Daily</mat-list-item>
+          <mat-list-item>Training</mat-list-item>
+      </mat-list>
+    </div>
+  </div>
 
   <div class="footer"></div>
 </div>

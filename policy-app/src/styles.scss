@@ -36,7 +36,7 @@ body {
   $margin_top: 16px;
   $margin_bottom: 32px;
 
-  height: calc(100% - $margin_top - $margin_bottom);
+  height: 100%;
   margin-top: $margin_top;
   margin-bottom: $margin_bottom;
 
