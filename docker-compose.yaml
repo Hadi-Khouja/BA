@@ -1,5 +1,6 @@
 version: '4.24.0'
-services:  
+services: 
+# Container for Policy distrubtion server instead of git repo 
   policy_api_server:
     image: nginx:latest
     ports: 
@@ -7,7 +8,26 @@ services:
     volumes: 
       - ./nginx/policy_api.conf:/etc/nginx/conf.d/default.conf
       - ./bundles:/usr/share/nginx/bundles  
-  
+# Container for PostgresSQL server
+  sql_server:
+    image: postgres
+    restart: always
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    logging:
+      options:
+        max-size: 10m
+        max-file: "3"
+    ports:
+      - '5438:5432'
+    volumes:
+      # copy the sql script to create tables
+      - ./sql/create_tables.sql:/docker-entrypoint-initdb.d/create_tables.sql
+      # copy the sql script to fill tables
+      - ./sql/fill_tables.sql:/docker-entrypoint-initdb.d/fill_tables.sql
+
   opal_server:
     image: permitio/opal-server:latest
     environment:
@@ -40,7 +60,7 @@ services:
     depends_on:
       - opal_server
     command: sh -c "exec ./wait-for.sh opal_server:7002 --timeout=20 -- ./start.sh"
-#
+# Container for frontend server 
 #  policy_app:
 #    image: angular
 #    build: 
