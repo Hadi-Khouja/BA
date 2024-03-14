@@ -23,5 +23,39 @@ export class OpaFetchService {
       }),
     );
   }
+
+  public updatePolicy() {
+    let body = `
+      package user_managment
+
+      actions = [
+        "create",
+        "edit",
+        "delete",
+      ]
+
+      users := {x: check_rights_on_users(x) | x = actions[_]}
+
+      check_rights_on_users(action) = "allow" {
+        input.user.roles[_] == "admin"
+        not action == "delete"
+      }
+
+      check_rights_on_users(action) = "denied" {
+        input.user.roles[_] == "admin"
+        action == "delete"
+      }
+
+      check_rights_on_users(action) = "allow" {
+        input.user.roles[_] == "editor"
+      }
+
+      check_rights_on_users(action) = "allow" {
+        input.user.roles[_] == "reader"
+      }
+      `;
+
+    this.http.put<any>(window.location.origin + '/opa/v1/policies/user_managment', body).subscribe();
+  }
 }
 

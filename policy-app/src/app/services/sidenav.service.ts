@@ -6,12 +6,18 @@ import { MatSidenav } from '@angular/material/sidenav';
 })
 export class SidenavService {
   private sidenav!: MatSidenav;
+  private data!: any;
 
   public setSidenav(sidenav: MatSidenav) {
     this.sidenav = sidenav;
   }
 
-  public open() {
+  public getData() {
+    return this.data;
+  }
+
+  public open(data: any) {
+    this.data = data;
     return this.sidenav.open();
   }
 
