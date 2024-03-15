@@ -1,20 +1,20 @@
 -- Creation of users table
 CREATE TABLE IF NOT EXISTS users(
-    user_id INT NOT NULL,
+    user_id SERIAL NOT NULL,
     name VARCHAR(250) NOT NULL,
     PRIMARY KEY(user_id)
 );
 
 -- Creation of groups table
 CREATE TABLE IF NOT EXISTS groups(
-    group_id INT NOT NULL,
+    group_id SERIAL NOT NULL,
     name VARCHAR(250) NOT NULL,
     PRIMARY KEY(group_id)
 );
 
 -- Creation of documents table
 CREATE TABLE IF NOT EXISTS documents(
-    document_id INT NOT NULL,
+    document_id SERIAL NOT NULL,
     name VARCHAR(250) NOT NULL,
     PRIMARY KEY(document_id)
 );

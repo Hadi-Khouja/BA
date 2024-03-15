@@ -1,2 +1,2 @@
-INSERT INTO users (name) VALUES("John Doe");
-INSERT INTO groups(name) VALUES("Developers");
+INSERT INTO users (name) VALUES('John Doe');
+INSERT INTO groups(name) VALUES('Developers');
