@@ -37,7 +37,7 @@ services:
       - OPAL_POLICY_REPO_MAIN_BRANCH=main
       - POLICY_REPO_CLONE_FOLDER_PREFIX=/policy
       - OPAL_POLICY_REPO_POLLING_INTERVAL=30
-      - OPAL_DATA_CONFIG_SOURCES={"config":{"entries":[{"url":"postgresql://admin@sql_server:5432/policies","config":{"fetcher":"PostgresFetchProvider","query":"SELECT * from users;","connection_params":{"password":"postgres"}},"topics":["policy_data"],"dst_path":"users"}]}}
+      - OPAL_DATA_CONFIG_SOURCES={"config":{"entries":[{"url":"postgresql://admin@sql_server:5432/policies","config":{"fetcher":"PostgresFetchProvider","query":"SELECT groups.name AS groupName, documents.name AS documentName, ChangeAttributesRelease, ChangeProtectedAttributes, ChangeHiddenAttributes, UpdateDocument, ImportDocument, ChangeDocumentType, CreatingDependantDocuments, CreateChangeNotes, CreateChangeRedlining, ChangeColorMarking, DeleteArchive, DeleteProcessing, DeleteRelease, DeleteVerification FROM writeRights INNER JOIN groups ON writeRights.owner_group_id = groups.group_id INNER JOIN documents ON writeRights.document_id = documents.document_id;","connection_params":{"password":"postgres"}},"topics":["policy_data"],"dst_path":"groups"}]}}
       # For fetching from API Bundle
       #- OPAL_POLICY_BUNDLE_URL=http://policy_api_server
       #- OPAL_POLICY_SOURCE_TYPE=API
