@@ -34,6 +34,7 @@ export class UsersManagmentComponent {
     private opa: OpaFetchService,
     private sidenav: SidenavService
   ) {
+    this.http.get(window.location.origin +  "/opa/v1/data/groups").subscribe();
     effect(() => this.fetchData());
   }
 

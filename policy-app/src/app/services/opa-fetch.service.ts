@@ -10,6 +10,10 @@ import { RequestBody } from 'src/types/request-body';
 export class OpaFetchService {
   constructor(private http: HttpClient) {}
 
+  public getGroups(): Observable<any> {
+    return this.http.get(window.location.origin +  "/opa/v1/data/groups").pipe();
+  }
+
   public readPolicy(body: RequestBody): Observable<Right[]> {
     return this.http.post<any>(window.location.origin + '/opa/v1/data/user_managment/users', body).pipe(
       tap((value: any) => {
