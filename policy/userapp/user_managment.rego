@@ -5,6 +5,6 @@ membersOfGroup if {
 	members.group_id == input.group.id
 }
 
-allow if {
+allow := true if {
 	input.group.id == "1"
 }
