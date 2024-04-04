@@ -1,10 +1,10 @@
 package user_managment
 
-membersOfGroup if {
+membersOfGroup contains members if {
 	members := data.members[_]
 	members.group_id == input.group.id
 }
 
-allow if {
+allow = true if {
 	input.group.id == "1"
 }
