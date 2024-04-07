@@ -10,9 +10,11 @@ membersOfGroup contains member if {
 # Generates Response
 documents contains {"filename": document.documemt_file_name, "type": document.documenttype, "read": right[0], "write": right[1]} if {
 	some document in data.documents
-	default_right := has_permission(document.documenttype, input.user.groupname)
-	custom_right := custom_permission(document.id, input.user.id)
-	right = default_right else = custom_right 
+	right = default_right {
+		default_right := has_permission(document.documenttype, input.user.groupname)
+	} else = custom_right {
+		custom_right := custom_permission(document.id, input.user.id)
+	}
 }
 
 # Service contract
