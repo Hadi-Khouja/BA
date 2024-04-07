@@ -6,7 +6,7 @@ membersOfGroup contains member if {
 	member.group_id == input.group.id
 }
 
-documents contains {"filename": document.documemt_file_name, "type": documenttype, "read": true, "write": true} if {
+documents contains {"filename": document.documemt_file_name, "type": document.documenttype, "read": true, "write": true} if {
 	some document in data.documents
 	document.documenttype == "TechnicalSpecification"
 	input.user.groupname == "Development"
