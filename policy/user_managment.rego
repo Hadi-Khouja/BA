@@ -8,5 +8,5 @@ membersOfGroup(group_id) contains member if {
 
 groups contains group if {
 	some i in data.groups
-	group := {"group_id" : i.group_id, "name": i.name, "members": membersOfGroup(i.group_id)}
+	group := {"group_id" : i.group_id, "name": i.name}
 }
