@@ -1,5 +1,6 @@
 package user_managment
 import rego.v1
+import custom_documents.custom_permission
 
 membersOfGroup contains member if {
 	some member in data.members
@@ -9,7 +10,11 @@ membersOfGroup contains member if {
 # Generates Response
 documents contains {"filename": document.documemt_file_name, "type": document.documenttype, "read": right[0], "write": right[1]} if {
 	some document in data.documents
-	right := has_permission(document.documenttype, input.user.groupname)
+	right = default_right if {
+		default_right := has_permission(document.documenttype, input.user.groupname)
+	} else = custom_right {
+		custom_right := custom_permission(document.id, input.user.id)
+	} 
 }
 
 # Service contract
