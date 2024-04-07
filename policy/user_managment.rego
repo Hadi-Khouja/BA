@@ -1,6 +1,6 @@
 package user_managment
 import rego.v1
-import custom_documents.custom_permission
+import rego.custom_documents.custom_permission
 
 membersOfGroup contains member if {
 	some member in data.members
