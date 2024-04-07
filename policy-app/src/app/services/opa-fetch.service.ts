@@ -21,21 +21,19 @@ export class OpaFetchService {
   public getGroups(): Observable<Group[]> {
     return this.http.get<Group[]>('/opa/v1/data/groups').pipe(
       map((value: any) => value.result),
-      concatMap((groups: any[]) => 
-      {
-        return from(groups).pipe(
-          switchMap((group) =>
+      switchMap((groups: any[]) =>
+        from(groups).pipe(
+          concatMap((group) =>
             this.getMembers(group).pipe(
               map((members: User[]) => {
                 group.members = members;
                 return group;
               }),
-              toArray(),
-              tap(value => console.log(value))
             ),
-          )
-        );
-      })
+          ),
+          toArray(),
+        ),
+      ),
     );
   }
 
