@@ -6,6 +6,6 @@ membersOfGroup contains members if {
 	members.group_id == input.group.id
 }
 
-allow if {
-	input.group.id == "1"
+allow contains members if {
+	members := data.members[_]
 }
