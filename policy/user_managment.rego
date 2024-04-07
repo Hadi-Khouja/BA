@@ -11,13 +11,13 @@ membersOfGroup contains member if {
 documents contains {"filename": document.documemt_file_name, "type": document.documenttype, "read": right[0], "write": right[1]} if {
 	some document in data.documents
 	right := custom_permission(document.id, input.user.id)
+	right != has_permission(document.documenttype, input.user.groupname)
 }
 
 # Generates Response
 documents contains {"filename": document.documemt_file_name, "type": document.documenttype, "read": right[0], "write": right[1]} if {
 	some document in data.documents
 	right := has_permission(document.documenttype, input.user.groupname)
-	not right == custom_permission(document.id, input.user.id)
 }
 
 # Service contract
