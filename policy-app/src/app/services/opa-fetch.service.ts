@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, tap } from 'rxjs';
-import { Right } from 'src/types/right';
-import { RequestBody } from 'src/types/request-body';
+import { Observable, concatMap, from, map, switchMap, tap, toArray, zip } from 'rxjs';
+import { Group } from 'src/types/group';
+import { User } from 'src/types/user';
 
 @Injectable({
   providedIn: 'root',
@@ -10,20 +10,49 @@ import { RequestBody } from 'src/types/request-body';
 export class OpaFetchService {
   constructor(private http: HttpClient) {}
 
-  public getGroups(): Observable<any> {
-    return this.http.get(window.location.origin +  "/opa/v1/data/groups").pipe();
+  public getUsers(): Observable<User[]> {
+    return this.http.get<User[]>('/opa/v1/data/users').pipe(
+      map((value: any) => {
+        return value.result;
+      }),
+    );
   }
 
-  public readPolicy(body: RequestBody): Observable<Right[]> {
-    return this.http.post<any>(window.location.origin + '/opa/v1/data/user_managment/users', body).pipe(
-      tap((value: any) => {
-        let rights: Right[] = [];
+  public getGroups(): Observable<Group[]> {
+    return this.http.get<Group[]>('/opa/v1/data/groups').pipe(
+      map((value: any) => value.result),
+      concatMap((groups: any[]) => 
+      {
+        return from(groups).pipe(
+          switchMap((group) =>
+            this.getMembers(group).pipe(
+              map((members: User[]) => {
+                group.members = members;
+                return group;
+              }),
+              toArray(),
+              tap(value => console.log(value))
+            ),
+          )
+        );
+      })
+    );
+  }
 
-        rights.push({ action: 'create', allow: value.result.create });
-        rights.push({ action: 'edit', allow: value.result.edit });
-        rights.push({ action: 'delete', allow: value.result.delete });
-        
-        return rights;
+  private getMembers(group: Group): Observable<User[]> {
+    let body = this.createRequestBody({
+      group: {
+        name: group.name,
+        id: group.group_id,
+      },
+    });
+
+    return this.http.post<any>('/opa/v1/data/user_managment/membersOfGroup', body).pipe(
+      map((value: any) => {
+        return value.result.map((member: any) => ({
+          name: member.username,
+          id: member.user_id,
+        }));
       }),
     );
   }
@@ -61,5 +90,10 @@ export class OpaFetchService {
 
     this.http.put<any>(window.location.origin + '/opa/v1/policies/user_managment', body).subscribe();
   }
-}
 
+  private createRequestBody(object: any) {
+    return {
+      input: object,
+    };
+  }
+}

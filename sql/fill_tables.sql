@@ -19,7 +19,7 @@ VALUES
 ('Development'),
 ('Marketing'),
 ('Accounting'),
-('Managers');
+('Management');
 
 -- assiging Roles
 INSERT INTO memberOf(user_id, group_id)

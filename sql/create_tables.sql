@@ -50,4 +50,59 @@ CREATE TABLE IF NOT EXISTS ownsDocument(
 	)
 );
 
--- Creation 
+-- Creation MaintenanceReport
+CREATE TABLE IF NOT EXISTS maintenanceReport (
+    document_id INT NOT NULL,
+    title VARCHAR(50) NOT NULL,
+    reportDate VARCHAR(50) NULL,
+    reportedBy VARCHAR(50) NULL,
+    action VARCHAR(250) NULL,
+
+    CONSTRAINT maintenance_fk
+        FOREIGN KEY(document_id) REFERENCES documents(document_id)
+);
+
+-- Creation Invoices
+CREATE TABLE IF NOT EXISTS invoices(
+    document_id INT NOT NULL,
+    recipient VARCHAR(50),
+    amount INT,
+    isPayed BOOLEAN,
+
+    CONSTRAINT invoice_fk
+        FOREIGN KEY(document_id) REFERENCES documents(document_id)
+);
+
+-- Creation MarketingPlan
+CREATE TABLE IF NOT EXISTS marketingPlans(
+    document_id INT NOT NULL,
+    title VARCHAR(50) NOT NULL,
+    target_audience VARCHAR(300),
+    budget INT,
+
+    CONSTRAINT marketing_fk
+        FOREIGN KEY(document_id) REFERENCES documents(document_id)
+);
+
+-- Creation Invoices
+CREATE TABLE IF NOT EXISTS technicalSpecifications(
+    document_id INT NOT NULL,
+    title VARCHAR(50) NOT NULL,
+    doc_version VARCHAR(50),
+    doc_date VARCHAR(50),
+
+    CONSTRAINT spec_fk
+        FOREIGN KEY(document_id) REFERENCES documents(document_id)
+);
+
+-- Creation Invoices
+CREATE TABLE IF NOT EXISTS serviceContracts(
+    document_id INT NOT NULL,
+    client_name VARCHAR(50),
+    duration VARCHAR(50),
+    service_fee INT,
+    terms VARCHAR(200),
+
+    CONSTRAINT service_fk
+        FOREIGN KEY(document_id) REFERENCES documents(document_id)
+);

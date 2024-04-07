@@ -1,45 +1,20 @@
 <mat-tab-group dynamicHeight>
   <mat-tab [label]="'Users'" style="flex-grow: 1">
-    <div class="scroll-content">
-        <mat-accordion>
-          <mat-expansion-panel hideToggle>
-            <mat-expansion-panel-header>
-              <mat-panel-title>Test User 1</mat-panel-title>
-            </mat-expansion-panel-header>
-            <mat-selection-list
-              #ChooseDocumentList
-              [multiple]="false"
-              [hideSingleSelectionIndicator]="true"
-              (selectionChange)="onSelectionChange(ChooseDocumentList)">
-              <mat-list-option [value]="'Document1'">
-                <mat-icon matListItemIcon>article</mat-icon>
-                test.pdf
-              </mat-list-option>
-              <mat-list-option [value]="'DocumentClass1'">
-                <mat-icon matListItemIcon>article</mat-icon>
-                Document Class 1
-              </mat-list-option>
-              <mat-list-option [value]="'text.txt'">
-                <mat-icon matListItemIcon>article</mat-icon>
-                text.txt
-              </mat-list-option>
-            </mat-selection-list>
-          </mat-expansion-panel>
-        </mat-accordion>
-    </div>
-  </mat-tab>
-  <mat-tab [label]="'Groups'">
-    <div class="scroll-content">
+    <div class="scroll-content" *ngIf="users$ | async as users">
       <mat-accordion>
-        <mat-expansion-panel hideToggle>
+        <mat-expansion-panel hideToggle *ngFor="let user of users">
           <mat-expansion-panel-header>
-            <mat-panel-title>Test Group 1</mat-panel-title>
+            <mat-panel-title>{{ user.name }}</mat-panel-title>
           </mat-expansion-panel-header>
           <mat-selection-list
             #ChooseDocumentList
             [multiple]="false"
             [hideSingleSelectionIndicator]="true"
             (selectionChange)="onSelectionChange(ChooseDocumentList)">
+            <mat-list-option [value]="'Document1'">
+              <mat-icon matListItemIcon>article</mat-icon>
+              test.pdf
+            </mat-list-option>
             <mat-list-option [value]="'DocumentClass1'">
               <mat-icon matListItemIcon>article</mat-icon>
               Document Class 1
@@ -49,6 +24,23 @@
               text.txt
             </mat-list-option>
           </mat-selection-list>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </div>
+  </mat-tab>
+  <mat-tab [label]="'Groups'">
+    <div class="scroll-content" *ngIf="groups$ | async as groups">
+      <mat-accordion>
+        <mat-expansion-panel hideToggle *ngFor="let group of groups">
+          <mat-expansion-panel-header>
+            <mat-panel-title>{{ group.name }}</mat-panel-title>
+          </mat-expansion-panel-header>
+          <mat-list>
+            <mat-list-item *ngFor="let member of group.members">
+              <mat-icon matListItemIcon>person</mat-icon>
+              {{ member.name }}
+            </mat-list-item>
+          </mat-list>
         </mat-expansion-panel>
       </mat-accordion>
     </div>
