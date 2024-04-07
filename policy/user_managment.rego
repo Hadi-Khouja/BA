@@ -1,7 +1,7 @@
 package user_managment
 import rego.v1
 
-membersOfGroup(group_id) contains member if {
+membersOfGroup(group_id) if {
 	some member in data.members
 	member.group_id == group_id
 }
