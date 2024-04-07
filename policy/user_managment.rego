@@ -6,57 +6,41 @@ membersOfGroup contains member if {
 	member.group_id == input.group.id
 }
 
-# Development Rights
-documents contains {"filename": document.documemt_file_name, "type": document.documenttype, "read": true, "write": true} if {
-	some document in data.documents
-	document.documenttype in {"TechnicalSpecification", "MaintenanceReport"}
-	input.user.groupname == "Development"
-}
-
-# Service contract
-documents contains {"filename": document.documemt_file_name, "type": document.documenttype, "read": true, "write": false} if {
-	some document in data.documents
-	document.documenttype == "ServiceContract"
-	input.user.groupname in {"Development", "Marketing", "Accounting" }
-}
-
-# Marketing Rights
-
-documents contains {"filename": document.documemt_file_name, "type": document.documenttype, "read": true, "write": true} if {
-	some document in data.documents
-	document.documenttype == "MarketingPlan"
-	input.user.groupname == "Marketing"
-}
-
-# Accounting rights
-documents contains {"filename": document.documemt_file_name, "type": document.documenttype, "read": true, "write": true} if {
-	some document in data.documents
-	document.documenttype == "Invoice"
-	input.user.groupname == "Accounting"
-}
-
-documents contains {"filename": document.documemt_file_name, "type": document.documenttype, "read": true, "write": false} if {
-	some document in data.documents
-	document.documenttype == "MarketingPlan"
-	input.user.groupname == "Accounting"
-}
-
-# Management rights
-documents contains {"filename": document.documemt_file_name, "type": document.documenttype, "read": true, "write": false} if {
-	some document in data.documents
-	document.documenttype in {"TechnicalSpecification", "Invoice", "MarketingPlan"}
-	input.user.groupname == "Management"
-}
-
+# Generates Response
 documents contains {"filename": document.documemt_file_name, "type": document.documenttype, "read": right[0], "write": right[1]} if {
 	some document in data.documents
 	right := has_permission(document.documenttype, input.user.groupname)
 }
 
-has_permission(documenttype, "Management") := [true, false] if {
-	documenttype in {"TechnicalSpecification", "Invoice", "MarketingPlan"}
+# Service contract
+has_permission("ServiceContract", group) := [true, false] if {
+	group in {"Development", "Marketing", "Accounting" }
 }
 
+# Development Rights
+has_permission(documenttype, "Development") := [true, true] if {
+	documenttype in {"TechnicalSpecification", "MaintenanceReport"}
+}
+
+# Accounting Rights
+has_permission(documenttype, "Accounting") := [true, true] if {
+	documenttype == "Invoice"
+}
+
+has_permission(documenttype, "Accounting") := [true, false] if {
+	documenttype == "MarketingPlan"
+}
+
+# Marketing Rights
+has_permission(documenttype, "Marketing") := [true, true] if {
+	documenttype == "MarketingPlan"
+}
+
+# Management Rights
 has_permission(documenttype, "Management") := [true, true] if {
 	documenttype == "ServiceContract"
+}
+
+has_permission(documenttype, "Management") := [true, false] if {
+	documenttype in {"TechnicalSpecification", "Invoice", "MarketingPlan"}
 }
