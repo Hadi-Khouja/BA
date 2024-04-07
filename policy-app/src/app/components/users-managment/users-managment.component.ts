@@ -25,8 +25,8 @@ export class UsersManagmentComponent implements OnInit {
     this.groups$ = this.opa.getGroups();
   }
 
-  public onSelectionChange(list: MatSelectionList): void {
-    const route = list.selectedOptions.selected[0].value;
-    this.sidenav.open(route);
+  public onSelectionChange(list: MatSelectionList, user: User): void {
+    const document = list.selectedOptions.selected[0].value;
+    this.sidenav.open({ user, document });
   }
 }

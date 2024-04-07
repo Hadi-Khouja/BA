@@ -1,49 +1,14 @@
 <div class="main">
-  <mat-tab-group dynamicHeight>
-    <mat-tab [label]="'Read Rights'" style="flex-grow: 1">
-      <div class="scroll-content">
-        <mat-selection-list [multiple]="true">
-          <mat-list-option [value]="'ExportDependentDocument'">Export dependent document</mat-list-option>
-          <mat-list-option [value]="'ExportOriginal'">Export original</mat-list-option>
-          <mat-list-option [value]="'ReadActivities'">Read activities</mat-list-option>
-          <mat-list-option [value]="'ReadArchive'">Read archive</mat-list-option>
-          <mat-list-option [value]="'ReadAttributes'">Read attributes</mat-list-option>
-          <mat-list-option [value]="'ReadProcessing'">Read processing</mat-list-option>
-          <mat-list-option [value]="'ReadRelease'">Read release</mat-list-option>
-          <mat-list-option [value]="'ReadBlocked'">Read blocked</mat-list-option>
-          <mat-list-option [value]="'ReadVerification'">Read verification</mat-list-option>
-          <mat-list-option [value]="'ReadHiddenAttributes'">Read hidden attributes</mat-list-option>
-          <mat-list-option [value]="'DisplayingWithWatermark'">Displaying with watermark</mat-list-option>
-        </mat-selection-list>
-      </div>
-    </mat-tab>
-    <mat-tab [label]="'Write Rights'">
-      <div class="scroll-content">
-        <mat-selection-list [multiple]="true">
-          <mat-list-option [value]="'ChangeAttributesProcessingVerification'">
-            Change attributes processing/verification
-          </mat-list-option>
-          <mat-list-option [value]="'ChangeAttributesRelease'">Change attributes Release</mat-list-option>
-          <mat-list-option [value]="'ChangeProtectedAttributes'">Change protected attributes</mat-list-option>
-          <mat-list-option [value]="'ChangeHiddenAttributes'">Change hidden attributes</mat-list-option>
-          <mat-list-option [value]="'UpdateDocument'">Update document</mat-list-option>
-          <mat-list-option [value]="'ImportDocument'">Import document</mat-list-option>
-          <mat-list-option [value]="'ChangeDocumentType'">Change document type</mat-list-option>
-          <mat-list-option [value]="'CreatingDependantDocuments'">Creating dependant documents</mat-list-option>
-          <mat-list-option [value]="'CreateChangeNotes'">Create/change notes</mat-list-option>
-          <mat-list-option [value]="'CreateChangeRedlining'">Create/change redlining</mat-list-option>
-          <mat-list-option [value]="'ChangeColorMarking'">Change color marking</mat-list-option>
-          <mat-list-option [value]="'DeleteArchive'">Delete Archive</mat-list-option>
-          <mat-list-option [value]="'Delete Processing'">Delete Processing</mat-list-option>
-          <mat-list-option [value]="'Delete Release'">Delete Release</mat-list-option>
-          <mat-list-option [value]="'Delete Verification'">Delete Verification</mat-list-option>
-        </mat-selection-list>
-      </div>
-    </mat-tab>
-  </mat-tab-group>
+  <div class="scroll-content">
+    <mat-selection-list [multiple]="true" [disabled]="userService.activeUser() !== 'admin'">
+      <div mat-subheader>{{ document().filename }} for user {{ user().name }}</div>
+      <mat-list-option [value]="document().read" [selected]="document().read">Read</mat-list-option>
+      <mat-list-option [value]="document().write" [selected]="document().write">Write</mat-list-option>
+    </mat-selection-list>
+  </div>
 </div>
 <div class="footer display-flex gap-8px padding-16px">
-    <span class="flex-grow-1"></span>
-    <button mat-stroked-button [color]="'primary'" (click)="close()">cancel</button>
-    <button mat-raised-button [color]="'primary'" (click)="updatePolicy()">update</button>
+  <span class="flex-grow-1"></span>
+  <button mat-stroked-button [color]="'primary'" (click)="close()">cancel</button>
+  <button mat-raised-button [color]="'primary'" [disabled]="userService.activeUser() !== 'admin'" (click)="updatePolicy()">update</button>
 </div>

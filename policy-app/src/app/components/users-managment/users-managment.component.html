@@ -11,8 +11,8 @@
             #ChooseDocumentList
             [multiple]="false"
             [hideSingleSelectionIndicator]="true"
-            (selectionChange)="onSelectionChange(ChooseDocumentList)">
-            <mat-list-option *ngFor="let document of user.documents" [value]="document.filename">
+            (selectionChange)="onSelectionChange(ChooseDocumentList, user)">
+            <mat-list-option *ngFor="let document of user.documents" [value]="document">
               <mat-icon matListItemIcon>article</mat-icon>
               <span matListItemTitle class="chips-density-3">
                 {{ document.filename }}

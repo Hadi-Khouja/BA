@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, concatMap, from, map, switchMap, tap, toArray } from 'rxjs';
+import { Observable, concatMap, from, map, switchMap, toArray } from 'rxjs';
 import { Group } from 'src/types/group';
 import { User } from 'src/types/user';
 
