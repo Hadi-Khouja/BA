@@ -11,5 +11,5 @@ membersOfGroup contains member if {
 
 allow contains member if {
 	some member in data.members
-	member.group_id == "1"
+	member.group_id == 1
 }
