@@ -15,7 +15,6 @@ export class UsersManagmentComponent implements OnInit {
   public users$!: Observable<User[]>;
   public groups$!: Observable<Group[]>;
 
-
   constructor(
     private opa: OpaFetchService,
     private sidenav: SidenavService,

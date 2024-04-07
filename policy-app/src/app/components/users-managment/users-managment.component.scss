@@ -1,0 +1,9 @@
+@use "@angular/material" as mat;
+
+.chips-density-3 {
+  @include mat.chips-density(-3);
+}
+
+[matListItemTitle] > mat-chip-set {
+  display: inline-flex;
+}

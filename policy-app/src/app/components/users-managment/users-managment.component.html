@@ -5,23 +5,25 @@
         <mat-expansion-panel hideToggle *ngFor="let user of users">
           <mat-expansion-panel-header>
             <mat-panel-title>{{ user.name }}</mat-panel-title>
+            <mat-panel-description>{{ user.groupname }}</mat-panel-description>
           </mat-expansion-panel-header>
           <mat-selection-list
             #ChooseDocumentList
             [multiple]="false"
             [hideSingleSelectionIndicator]="true"
             (selectionChange)="onSelectionChange(ChooseDocumentList)">
-            <mat-list-option [value]="'Document1'">
+            <mat-list-option *ngFor="let document of user.documents" [value]="document.filename">
               <mat-icon matListItemIcon>article</mat-icon>
-              test.pdf
-            </mat-list-option>
-            <mat-list-option [value]="'DocumentClass1'">
-              <mat-icon matListItemIcon>article</mat-icon>
-              Document Class 1
-            </mat-list-option>
-            <mat-list-option [value]="'text.txt'">
-              <mat-icon matListItemIcon>article</mat-icon>
-              text.txt
+              <span matListItemTitle class="chips-density-3">
+                {{ document.filename }}
+                  <mat-chip-set>
+                    <mat-chip *ngIf="document.read" [color]="'accent'" highlighted>read</mat-chip>
+                    <mat-chip *ngIf="document.write" [color]="'warn'" highlighted>write</mat-chip>
+                  </mat-chip-set>
+              </span>
+              <div matListItemLine>
+                {{ document.type }}
+              </div>
             </mat-list-option>
           </mat-selection-list>
         </mat-expansion-panel>

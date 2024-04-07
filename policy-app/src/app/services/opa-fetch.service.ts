@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, concatMap, from, map, switchMap, tap, toArray, zip } from 'rxjs';
+import { Observable, concatMap, from, map, switchMap, tap, toArray } from 'rxjs';
 import { Group } from 'src/types/group';
 import { User } from 'src/types/user';
 
@@ -12,9 +12,20 @@ export class OpaFetchService {
 
   public getUsers(): Observable<User[]> {
     return this.http.get<User[]>('/opa/v1/data/users').pipe(
-      map((value: any) => {
-        return value.result;
-      }),
+      map((value: any) => value.result),
+      switchMap((users: any[]) =>
+        from(users).pipe(
+          concatMap((user) =>
+            this.getDocuments(user).pipe(
+              map((documents: Document[]) => {
+                user.documents = documents;
+                return user;
+              }),
+            ),
+          ),
+          toArray(),
+        ),
+      ),
     );
   }
 
@@ -35,6 +46,18 @@ export class OpaFetchService {
         ),
       ),
     );
+  }
+
+  public getDocuments(user: User): Observable<Document[]> {
+    let body = this.createRequestBody({
+      user: {
+        id: user.id,
+        name: user.name,
+        groupname: user.groupname,
+      },
+    });
+
+    return this.http.post<any>('/opa/v1/data/user_managment/documents', body).pipe(map((value: any) => value.result));
   }
 
   private getMembers(group: Group): Observable<User[]> {
