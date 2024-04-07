@@ -1,12 +1,12 @@
 package user_managment
 import rego.v1
 
-membersOfGroup(group_id) if {
+memberOfGroup(group_id) if {
 	some member in data.members
 	member.group_id == group_id
 }
 
 groups contains group if {
 	some i in data.groups
-	group := {"group_id" : i.group_id, "name": i.name}
+	group := {"group_id" : i.group_id, "name": i.name, "members": memberOfGroup(i.group_id)}
 }
