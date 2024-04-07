@@ -54,7 +54,7 @@ documents contains {"filename": document.documemt_file_name, "type": document.do
 }
 
 has_permission(documenttype, "Management") := [true, false] if {
-	doctype in {"TechnicalSpecification", "Invoice", "MarketingPlan"}
+	documenttype in {"TechnicalSpecification", "Invoice", "MarketingPlan"}
 }
 
 has_permission(documenttype, "Management") := [true, true] if {
