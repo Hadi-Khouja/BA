@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, concatMap, from, map, switchMap, toArray } from 'rxjs';
 import { Group } from 'src/types/group';
+import { SideDto } from 'src/types/sidedto';
 import { User } from 'src/types/user';
 
 @Injectable({
@@ -51,7 +52,7 @@ export class OpaFetchService {
   public getDocuments(user: User): Observable<Document[]> {
     let body = this.createRequestBody({
       user: {
-        id: user.id,
+        id: user.user_id,
         name: user.name,
         groupname: user.groupname,
       },
@@ -78,38 +79,12 @@ export class OpaFetchService {
     );
   }
 
-  public updatePolicy() {
+  public updatePolicy(data: SideDto, selection: boolean[]) {
     let body = `
-      package user_managment
-
-      actions = [
-        "create",
-        "edit",
-        "delete",
-      ]
-
-      users := {x: check_rights_on_users(x) | x = actions[_]}
-
-      check_rights_on_users(action) = "allow" {
-        input.user.roles[_] == "admin"
-        not action == "delete"
-      }
-
-      check_rights_on_users(action) = "denied" {
-        input.user.roles[_] == "admin"
-        action == "delete"
-      }
-
-      check_rights_on_users(action) = "allow" {
-        input.user.roles[_] == "editor"
-      }
-
-      check_rights_on_users(action) = "allow" {
-        input.user.roles[_] == "reader"
-      }
+      package custom_documents
+      custom_permission("${data.document.filename}", ${data.user.user_id}) := [${selection[0]}, ${selection[1]}]
       `;
-
-    this.http.put<any>(window.location.origin + '/opa/v1/policies/user_managment', body).subscribe();
+    this.http.put<any>('/opa/v1/policies/custom_documents', body).subscribe();
   }
 
   private createRequestBody(object: any) {

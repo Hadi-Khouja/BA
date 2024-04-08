@@ -1,14 +1,24 @@
 <div class="main">
   <div class="scroll-content">
-    <mat-selection-list [multiple]="true" [disabled]="userService.activeUser() !== 'admin'">
+    <mat-selection-list
+      #rightsList
+      [multiple]="true"
+      [disabled]="userService.activeUser() !== 'admin'"
+      (selectionChange)="onSelectionChange(rightsList)">
       <div mat-subheader>{{ document().filename }} for user {{ user().name }}</div>
-      <mat-list-option [value]="document().read" [selected]="document().read">Read</mat-list-option>
-      <mat-list-option [value]="document().write" [selected]="document().write">Write</mat-list-option>
+      <mat-list-option [value]="'read'" [selected]="document().read">Read</mat-list-option>
+      <mat-list-option [value]="'write'" [selected]="document().write">Write</mat-list-option>
     </mat-selection-list>
   </div>
 </div>
 <div class="footer display-flex gap-8px padding-16px">
   <span class="flex-grow-1"></span>
-  <button mat-stroked-button [color]="'primary'" (click)="close()">cancel</button>
-  <button mat-raised-button [color]="'primary'" [disabled]="userService.activeUser() !== 'admin'" (click)="updatePolicy()">update</button>
+  <button mat-stroked-button [color]="'primary'" (click)="sidenav.close()">cancel</button>
+  <button
+    mat-raised-button
+    [color]="'primary'"
+    [disabled]="userService.activeUser() !== 'admin'"
+    (click)="updatePolicy()">
+    update
+  </button>
 </div>

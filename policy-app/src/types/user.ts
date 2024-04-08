@@ -1,7 +1,7 @@
 import { document } from './document';
 
 export interface User {
-  id: number;
+  user_id: number;
   name: string;
   groupname: string;
   documents: document[];

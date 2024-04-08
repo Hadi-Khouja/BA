@@ -8,7 +8,7 @@ import { SideDto } from 'src/types/sidedto';
 export class SidenavService {
   private sidenav!: MatSidenav;
   public data = signal<SideDto>({
-    user: { id: -1, name: '', groupname: '', documents: [] },
+    user: { user_id: -1, name: '', groupname: '', documents: [] },
     document: { filename: '', type: '', read: false, write: false },
   });
 
