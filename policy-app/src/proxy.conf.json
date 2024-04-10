@@ -1,6 +1,6 @@
 {
     "/opa": {
-      "target": "http://localhost:8181",
+      "target": "http://opal_client:8181",
       "secure": false,
       "pathRewrite": {
         "^/opa": ""
