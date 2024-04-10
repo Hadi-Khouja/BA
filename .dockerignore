@@ -3,5 +3,3 @@
 **/.vscode
 **/.angular
 .gitignore
-.prettierignore
-.prettierrc.json
