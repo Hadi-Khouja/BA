@@ -1,7 +1,8 @@
 package user_managment
-import rego.v1
-import data.custom_documents.custom_permission
+import rego.v1 #import for using keywords if, contains, some and in
+import data.custom_documents.custom_permission #import the custom defined policies
 
+# returns a members list for redenering in 
 membersOfGroup contains member if {
 	some member in data.members
 	member.group_id == input.group.id
