@@ -1,0 +1,16 @@
+PUT http://localhost:8181/v1/policies/example2/policy/ HTTP/1.1
+Content-Type: text/plain
+
+package example.policy2
+
+default allow := false
+
+allow contains user.name if {
+	user := input.users[_]
+	user.role == "admin"
+}
+
+allow contains user.name if {
+	user := input.users[_]
+	user.role == "employee"
+}

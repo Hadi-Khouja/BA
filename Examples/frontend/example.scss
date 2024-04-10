@@ -1,0 +1,15 @@
+//Variablen Definieren
+$primary-color: blue;
+$accent-color: white;
+
+.content {
+  //Klasse Content
+  background-color: $primary-color;
+
+  //Verschachtelung hinzufügen
+  //dieser Regel gilt nur für alle h1 Tags,
+  //die innerhalb der Klasse content liegen
+  h1 {
+    color: $accent-color;
+  }
+}

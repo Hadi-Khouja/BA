@@ -1,0 +1,16 @@
+POST http://localhost:8181/v1/data/example/policy2/allow HTTP/1.1
+Content-Type: application/json
+
+{
+	"input": {
+	    "users": [
+	    {
+	        "name": "Max Mustermann",
+	        "role": "admin"
+	    },
+	    {
+	        "name": "Martina Musterfrau",
+	        "role": "employee"
+	    }]
+	}
+}

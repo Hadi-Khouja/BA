@@ -1,0 +1,62 @@
+{
+    "config": {
+        "entries": [
+            {
+                "url": "postgresql://admin@sql_server:5432/policies",
+                "config": {
+                    "fetcher": "PostgresFetchProvider",
+                    "query": "SELECT memberOf.user_id, users.name, groups.name AS groupname FROM memberOf JOIN groups ON memberOf.group_id = groups.group_id JOIN users ON memberOf.user_id = users.user_id;",
+                    "connection_params": {
+                        "password": "postgres"
+                    }
+                },
+                "topics": [
+                    "policy_data"
+                ],
+                "dst_path": "users"
+            },
+            {
+                "url": "postgresql://admin@sql_server:5432/policies",
+                "config": {
+                    "fetcher": "PostgresFetchProvider",
+                    "query": "SELECT * FROM groups;",
+                    "connection_params": {
+                        "password": "postgres"
+                    }
+                },
+                "topics": [
+                    "policy_data"
+                ],
+                "dst_path": "groups"
+            },
+            {
+                "url": "postgresql://admin@sql_server:5432/policies",
+                "config": {
+                    "fetcher": "PostgresFetchProvider",
+                    "query": "SELECT * from documents;",
+                    "connection_params": {
+                        "password": "postgres"
+                    }
+                },
+                "topics": [
+                    "policy_data"
+                ],
+                "dst_path": "documents"
+            },
+            {
+                "url": "postgresql://admin@sql_server:5432/policies",
+                "config": {
+                    "fetcher": "PostgresFetchProvider",
+                    "query": "SELECT memberOf.user_id, users.name AS username, memberOf.group_id, groups.name FROM memberOf JOIN groups ON memberOf.group_id = groups.group_id JOIN users ON memberOf.user_id = users.user_id;",
+                    "connection_params": {
+                        "password": "postgres"
+                    }
+                },
+                "topics": [
+                    "policy_data"
+                ],
+                "dst_path": "members"
+            }
+        ]
+    }
+}

@@ -1,0 +1,3 @@
+ruleName := returnType if {
+	ruleBody
+}

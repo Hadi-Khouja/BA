@@ -1,0 +1,12 @@
+{
+    "users": [
+        {
+            "name": "Max Mustermann",
+            "role": "admin"
+        },
+        {
+            "name": "Martina Musterfrau",
+            "role": "employee"
+        }
+    ]
+}
